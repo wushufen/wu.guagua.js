@@ -26,7 +26,7 @@ wu.guagua({
 		canvas.width = width;
 		canvas.height = height;
 
-		// 画面定位
+		// 画布定位
 		el.style.position = 'relative';
 		canvas.style.position = 'absolute';
 		canvas.style.left = '0';
@@ -80,7 +80,7 @@ wu.guagua({
 		canvas.addEventListener('touchmove', gua);
 		canvas.addEventListener('mousemove', gua);
 
-	window.canvas = canvas;
+		// window.canvas = canvas;
 
 	}
 
