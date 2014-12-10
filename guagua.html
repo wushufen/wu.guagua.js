@@ -3,6 +3,10 @@
 <head>
 	<title></title>
 
+<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+<META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT">
+
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
@@ -13,7 +17,7 @@
 
 	<style type="text/css">
 		#guaguaCt{
-			margin: 300px auto 0;
+			margin: 150px auto 0;
 			width: 300px;
 			height: 100px;
 			background: #ff0;
@@ -27,7 +31,7 @@
 		你中暑了
 	</div>
 	<script type="text/javascript">
-		wu.guagua({
+		gua = wu.guagua({
 			el: document.getElementById('guaguaCt'),
 			cover: 'cover.png',
 			callback: function(pc){
@@ -37,8 +41,25 @@
 				}
 			}
 		});
+
+/*		setTimeout(function(){
+			gua.ctx.globalCompositeOperation = 'destination-out';//关键
+			gua.ctx.fillRect(100, 50, 60, 60)
+
+		}, 1000);*/
 	</script>
 
+	<canvas id="tc" style="border:solid "></canvas>
+	<script type="text/javascript">
+		var canvas = document.getElementById('tc');
+
+		var ctx = canvas.getContext('2d');
+		ctx.fillStyle = '#A3A3A3';
+		ctx.fillRect(0,0,300,100);
+		ctx.globalCompositeOperation = 'destination-out';//关键
+			ctx.arc(30, 30, 15, 0, Math.PI * 2);
+			ctx.fill();
+	</script>
 
 </body>
 </html>

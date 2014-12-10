@@ -15,7 +15,7 @@ wu.guagua({
 	}
 });
 */
-+function(wu){
+;+function(wu){
 
 	wu.guagua = function(options){
 		var el = options.el,
@@ -63,12 +63,14 @@ wu.guagua({
 			// console.log(e);
 
 			if(e.changedTouches){
-				e=e.changedTouches[e.changedTouches.length-1];
+				// e=e.changedTouches[e.changedTouches.length-1];
+				e=e.changedTouches[0];
 			}
 			var x = (e.clientX + document.body.scrollLeft || e.pageX) - el.offsetLeft || 0,
 				y = (e.clientY + document.body.scrollTop || e.pageY) - el.offsetTop || 0;
 			// console.log(x,y);
 
+			ctx.beginPath();
 			ctx.arc(x, y, 15, 0, Math.PI * 2);
 			ctx.fill();
 
@@ -101,4 +103,4 @@ wu.guagua({
 	};
 
 	window.wu = wu;
-}(window.wu||{})
+}(window.wu||{});
