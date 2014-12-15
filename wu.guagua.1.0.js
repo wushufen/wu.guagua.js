@@ -4,6 +4,9 @@ by wushufen
 2014.11.25
 wusfun@foxmail.com
 
+bug: 
+	2014.12.10 部分安android机刮不了，回调却是正常的
+
 wu.guagua({
 	el: document.getElementById('guaguaCt'),
 	cover: 'img.png',
@@ -15,7 +18,7 @@ wu.guagua({
 	}
 });
 */
-;+function(wu){
++function(wu){
 
 	wu.guagua = function(options){
 		var el = options.el,
@@ -28,6 +31,8 @@ wu.guagua({
 
 		// 创建画布
 		var canvas = document.createElement('canvas');
+
+		// 画布尺寸
 		// canvas.style.width = width+'px';//不要使用这种宽度和高度，这样会使坐标不对应
 		// canvas.style.height = height+'px';
 		canvas.width = width;
@@ -44,14 +49,18 @@ wu.guagua({
 		// 涂层
 		var ctx = canvas.getContext('2d');
 		ctx.fillStyle = '#A3A3A3';
+		ctx.beginPath();
 		ctx.fillRect(0,0,width,height);
+		ctx.closePath();
 
 		// 图片涂层
 		if (cover) {
 			var coverImg = new Image;
 			coverImg.src = cover;
 			coverImg.onload = function(){
+				ctx.beginPath();
 				ctx.drawImage(coverImg,0,0);
+				ctx.closePath();
 			};
 		};
 
@@ -64,7 +73,7 @@ wu.guagua({
 
 			if(e.changedTouches){
 				// e=e.changedTouches[e.changedTouches.length-1];
-				e=e.changedTouches[0];
+				e = e.changedTouches[0];
 			}
 			var x = (e.clientX + document.body.scrollLeft || e.pageX) - el.offsetLeft || 0,
 				y = (e.clientY + document.body.scrollTop || e.pageY) - el.offsetTop || 0;
@@ -73,23 +82,29 @@ wu.guagua({
 			ctx.beginPath();
 			ctx.arc(x, y, 15, 0, Math.PI * 2);
 			ctx.fill();
+			ctx.closePath();
 
 			// 回调
 			callback&&callback(getTransparentPercent());
+
+			// 2014.12.11 bug fixed 部分微信浏览器刮了看不到效果，
+			// 通过不断改canvas的css来促使浏览器更新渲染
+			canvas.style.marginRight = (canvas.style.marginRight == '0px'? '1px': '0px');
+
 		};
 
 		// 透明百分比
 		var getTransparentPercent = function() {
 			var imgData = ctx.getImageData(0, 0, width, height),
-				pixles = imgData.data,
-				transPixs = [];
-			for (var i = 0, j = pixles.length; i < j; i += 4) {
-				var a = pixles[i + 3];
+				rgbaArr = imgData.data,
+				transPixNum = 0;
+			for (var i = 0; i < rgbaArr.length; i += 4) {
+				var a = rgbaArr[i + 3];
 				if (a < 128) {
-					transPixs.push(i);
+					transPixNum++;
 				}
 			}
-			return (transPixs.length / (pixles.length / 4) * 100).toFixed(2);
+			return (transPixNum / (rgbaArr.length / 4) * 100).toFixed(2);
 		};
 
 		// 注册事件

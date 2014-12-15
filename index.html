@@ -10,9 +10,9 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
-	<script type="text/javascript" src="wu.guagua.js?r=123"></script>
+	<script type="text/javascript" src="wu.guagua.2.0.js"></script>
 </head>
-<body>
+<body style="background: #0af">
 
 
 	<style type="text/css">
@@ -27,12 +27,13 @@
 		}
 	</style>
 	<div id="guaguaCt">
-		<!-- <img width="100%" height="100%" src="http://image.xinmin.cn/2012/04/06/20120406184232130334.jpg"> -->
+		<img width="100%" height="100%" src="http://image.xinmin.cn/2012/04/06/20120406184232130334.jpg">
 		你中暑了
 	</div>
 	<script type="text/javascript">
 		gua = wu.guagua({
 			el: document.getElementById('guaguaCt'),
+			prize: 'prize.jpg',
 			cover: 'cover.png',
 			callback: function(pc){
 				document.title = pc;
@@ -41,25 +42,6 @@
 				}
 			}
 		});
-
-/*		setTimeout(function(){
-			gua.ctx.globalCompositeOperation = 'destination-out';//关键
-			gua.ctx.fillRect(100, 50, 60, 60)
-
-		}, 1000);*/
 	</script>
-
-	<canvas id="tc" style="border:solid "></canvas>
-	<script type="text/javascript">
-		var canvas = document.getElementById('tc');
-
-		var ctx = canvas.getContext('2d');
-		ctx.fillStyle = '#A3A3A3';
-		ctx.fillRect(0,0,300,100);
-		ctx.globalCompositeOperation = 'destination-out';//关键
-			ctx.arc(30, 30, 15, 0, Math.PI * 2);
-			ctx.fill();
-	</script>
-
 </body>
 </html>
